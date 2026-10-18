@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Personal Expense Tracker</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="container">
+    <h1>Personal Expense Tracker</h1>
+    <p class="subtitle">Manage your daily spending in one place.</p>
+
+    <section class="summary">
+        <p>Total Expenses</p>
+        <h2>₹ {{ "%.2f"|format(total) }}</h2>
+        <p>Expenses recorded: {{ expense_count }}</p>
+    </section>
+
+    <div class="cards">
+        <section class="panel">
+            <h3>Monthly Budget</h3>
+            <h2>₹ {{ "%.2f"|format(budget) }}</h2>
+            <p>Remaining: ₹ {{ "%.2f"|format(remaining) }}</p>
+            {% if remaining < 0 %}
+            <p class="warning">Budget exceeded!</p>
+            {% endif %}
+        </section>
+
+        <section class="panel">
+            <h3>Set Your Budget</h3>
+            <form action="{{ url_for('set_budget') }}" method="POST">
+                <label for="budget">Budget amount (₹)</label>
+                <input id="budget" name="budget" type="number"
+                       min="0.01" step="0.01" required>
+                <button type="submit">Update Budget</button>
+            </form>
+        </section>
+    </div>
+
+    <section class="panel">
+        <h2>Add New Expense</h2>
+        <form method="POST">
+            <label for="title">Expense Title</label>
+            <input id="title" name="title" placeholder="e.g. Lunch" required>
+
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="">Choose a category</option>
+                <option>Food</option>
+                <option>Travel</option>
+                <option>Shopping</option>
+                <option>Education</option>
+                <option>Bills</option>
+                <option>Other</option>
+            </select>
+
+            <label for="amount">Amount (₹)</label>
+            <input id="amount" type="number" name="amount"
+                   min="0.01" step="0.01" required>
+
+            <label for="date">Date</label>
+            <input id="date" type="date" name="date" required>
+
+            <button type="submit">Add Expense</button>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Expense History</h2>
+
+        {% if expenses %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.title }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>₹ {{ "%.2f"|format(expense.amount) }}</td>
+                        <td>{{ expense.date }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_expense', expense_id=expense.id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Delete this expense?');">
+                                <button class="delete-btn" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="empty">No expenses recorded yet.</p>
+        {% endif %}
+    </section>
+
+    <section class="panel">
+        <h2>Category-wise Expenses</h2>
+        {% if category_totals %}
+            {% for category, amount in category_totals.items() %}
+            <div class="category-row">
+                <span>{{ category }}</span>
+                <strong>₹ {{ "%.2f"|format(amount) }}</strong>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="empty">Add expenses to see your category summary.</p>
+        {% endif %}
+    </section>
+</main>
+</body>
+</html>

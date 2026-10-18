@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f5fb;
+    color: #263248;
+    margin: 0;
+    padding: 25px 15px;
+}
+
+.container {
+    max-width: 950px;
+    margin: auto;
+}
+
+h1 {
+    color: #244c91;
+}
+
+.subtitle, .empty {
+    color: #667085;
+}
+
+.summary {
+    background: #244c91;
+    color: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin: 22px 0;
+}
+
+.summary h2 {
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.panel {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    box-shadow: 0 3px 12px #0000000a;
+}
+
+label {
+    display: block;
+    margin: 14px 0 6px;
+    font-weight: bold;
+}
+
+input, select {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccd3df;
+    border-radius: 6px;
+}
+
+button {
+    padding: 11px 15px;
+    margin-top: 16px;
+    background: #244c91;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form > button {
+    width: 100%;
+}
+
+button:hover {
+    background: #18376b;
+}
+
+.delete-btn {
+    background: #c0392b;
+    margin: 0;
+}
+
+.delete-btn:hover {
+    background: #922b21;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+th {
+    background: #f1f5fb;
+}
+
+td form {
+    margin: 0;
+}
+
+.category-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 13px 0;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+.warning {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    .panel {
+        padding: 15px;
+    }
+}
